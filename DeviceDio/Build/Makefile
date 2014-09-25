@@ -487,7 +487,6 @@ endif
 ##############################################################################
 ##############################################################################
 # Configure for the selected PLatform and stack
-SDK_BASE_DIR=/cygdrive/c/jennic
 include $(SDK_BASE_DIR)/Chip/Common/Build/config.mk
 include $(SDK_BASE_DIR)/Platform/Common/Build/Config.mk
 include $(SDK_BASE_DIR)/Stack/Common/Build/config.mk
