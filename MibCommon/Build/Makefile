@@ -52,7 +52,7 @@ APP_LIB_DIR 	        = $(APP_BASE)/$(TARGET)/Build
 sinclude $(APP_BASE)/Common/Build/config.mk
 
 # Default target device is the JN5148
-JENNIC_CHIP ?= JN5148
+JENNIC_CHIP ?= JN5168
 
 # Default DK2 development kit target hardware
 JENNIC_PCB ?= DEVKIT2
