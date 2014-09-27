@@ -76,6 +76,8 @@
 #include "MibDioControl.h"
 //#include "Uart.h"
 
+#include "ir.h"
+
 /****************************************************************************/
 /***        Macro Definitions                                             ***/
 /****************************************************************************/
@@ -497,6 +499,20 @@ PUBLIC void Device_vMain(void)
 		}
 		/* Restart watchdog */
 	   	vAHI_WatchdogRestart();
+
+		/* hijack */
+		{
+		  if (initialize_ir_hw()) {
+		    DBG_vPrintf(DEBUG_DEVICE_FUNC, "\nir initialize worked");
+		  } else {
+		    DBG_vPrintf(DEBUG_DEVICE_FUNC, "\nir initialize FAIL!");
+		  }
+		}
+		DBG_vPrintf(DEBUG_DEVICE_FUNC, "\nEntering while 1 loop");
+		while(1) {
+		  ir_tick();
+		  vAHI_WatchdogRestart();
+		}
 	   	/* Deal with device tick timer events ? */
 	   	Device_vTick();
 		/* Doze */

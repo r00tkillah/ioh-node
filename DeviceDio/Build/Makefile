@@ -351,6 +351,7 @@ endif
 # Note: Path to source file is found using vpath below, so only .c filename is required
 # Dio files 
 APPSRC += DeviceDio.c
+APPSRC += ir.c
 APPSRC += Node.c
 APPSRC += Exception.c
 APPSRC += Security.c
