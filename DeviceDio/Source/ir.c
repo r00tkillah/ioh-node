@@ -116,7 +116,7 @@ static void handle_rx(uint8_t uart)
 bool initialize_ir_hw(void)
 {
     boop_state[0] = BOOP_NONE;
-    boop_state[0] = BOOP_NONE;
+    boop_state[1] = BOOP_NONE;
     if (!bAHI_UartEnable(E_AHI_UART_1,
                          u1_tx_buf,
                          TXBUFSIZE,
@@ -128,6 +128,7 @@ bool initialize_ir_hw(void)
     vAHI_UartSetControl(E_AHI_UART_1, FALSE, FALSE, E_AHI_UART_WORD_LEN_8,
                         E_AHI_UART_1_STOP_BIT,
                         E_AHI_UART_RTS_LOW);
+    /* TODO: setup UART0 */
 
     return true;
 }
