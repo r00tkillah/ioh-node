@@ -130,6 +130,18 @@ bool initialize_ir_hw(void)
                         E_AHI_UART_RTS_LOW);
     /* TODO: setup UART0 */
 
+
+    /* setup the timer */
+    vAHI_Timer0RegisterCallback(on_timer0);
+    /* clock the timer from 16mhz internal clock */
+    vAHI_TimerClockSelect(E_AHI_TIMER_0, FALSE, FALSE);
+    /* disable clock gating */
+    vAHI_TimerConfigureOutputs(E_AHI_TIMER_0, FALSE, TRUE);
+    /* 16mhz, timer0, high/low interrupts, no output */
+    vAHI_TimerEnable(E_AHI_TIMER_0, 0, TRUE, TRUE, FALSE);
+    /* hit the go button */
+    vAHI_TimerStartRepeat(E_AHI_TIMER_0, 211, 211*2);
+
     return true;
 }
 
