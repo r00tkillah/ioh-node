@@ -108,7 +108,7 @@ static bool is_a_boop(uint8_t input, uint8_t state)
 }
 
 static bool uart_signal(struct send_info_t *send) {
-    bool signal = false;
+    bool signal = true;
 
     if (send->request_send) {
         send->sending = true;
@@ -168,11 +168,15 @@ static void setup_send_info(struct send_info_t *send)
     strcpy((char*)(send->msg.bytes), "BOOP");
 }
 
-static void send(uint8_t i, uint32_t number)
+static bool send(uint8_t i, uint32_t number)
 {
+    if (send_info[i].sending) {
+        return false;
+    }
     send_info[i].request_send = true;
     send_info[i].msg.parts.number = number;
     send_info[i].msg.parts.checksum = 0; /* FIXME */
+    return true;
 }
 
 static void on_timer0(uint32_t device_id, uint32_t item_bitmap)
@@ -195,8 +199,8 @@ static void on_timer0(uint32_t device_id, uint32_t item_bitmap)
 
     {
         /* just for now spit out raw serial */
-        uint8_t on = 0;
-        uint8_t off= 0;
+        uint32_t on = 0;
+        uint32_t off= 0;
         
         if (signal[0]) {
             on |= 1;
@@ -212,6 +216,7 @@ static void on_timer0(uint32_t device_id, uint32_t item_bitmap)
     }
 #endif
 #if 0
+    /* this has been observed to work */
     if (item_bitmap & E_AHI_TIMER_RISE_MASK) {
         /* rising edge */
         vAHI_DioSetOutput(0x3, 0x0);
@@ -291,7 +296,6 @@ bool initialize_ir_hw(void)
 
     setup_send_info(&(send_info[0]));
     setup_send_info(&(send_info[1]));
-    send(0, 1234);
     /* setup DIO */
     vAHI_DioSetDirection(0, 0x3);
 
@@ -311,6 +315,8 @@ bool initialize_ir_hw(void)
 
 void ir_tick(void)
 {
+    send(0, 1234);
+    send(1, 5678);
     handle_rx(E_AHI_UART_1); /* hack */
 }
 
