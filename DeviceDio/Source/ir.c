@@ -26,7 +26,7 @@ struct __attribute__ ((__packed__)) message_parts {
 };
 
 typedef union message {
-    uint8_t bytes[12];
+    uint8_t bytes[4+4+2];
     message_parts parts;
 } message;
 
@@ -112,7 +112,11 @@ static bool uart_signal(struct send_info_t *send) {
 
     if (send->request_send) {
         send->sending = true;
-        DBG_vPrintf(DEBUG_DEVICE_FUNC, "\nrequest rcvd");
+        send->request_send = false;
+    }
+    if (send->sending && send->cur_byte == 4+4+2) {
+        /* we just transmitted the last stop bit */
+        send->sending = false;
     }
     if (!send->sending) {
         return signal;
@@ -127,6 +131,7 @@ static bool uart_signal(struct send_info_t *send) {
     case BIT_1:
     case BIT_2:
     case BIT_3:
+    case BIT_4:
     case BIT_5:
     case BIT_6:
     case BIT_7:
@@ -143,8 +148,7 @@ static bool uart_signal(struct send_info_t *send) {
     case STOP_BIT:
         signal = true;
         send->cur_bit = START_BIT;
-        send->cur_byte = (send->cur_byte + 1) % sizeof(message_parts);
-        DBG_vPrintf(DEBUG_DEVICE_FUNC, "\nstop bit");
+        send->cur_byte = (send->cur_byte + 1);
         break;
     default:
         signal = true;
@@ -173,6 +177,7 @@ static void send(uint8_t i, uint32_t number)
 
 static void on_timer0(uint32_t device_id, uint32_t item_bitmap)
 {
+#if 1
     static uint8_t bitcounter = 0;
     static bool signal[2];
 
@@ -203,14 +208,17 @@ static void on_timer0(uint32_t device_id, uint32_t item_bitmap)
         } else {
             off |= 2;
         }
-        vAHI_DoSetDataOut(on, off);
+        vAHI_DioSetOutput(on, off);
     }
+#endif
 #if 0
     if (item_bitmap & E_AHI_TIMER_RISE_MASK) {
         /* rising edge */
+        vAHI_DioSetOutput(0x3, 0x0);
     } else {
         /* there is a mask for the falling edge, but there really
            isn't another reason we should be here */
+        vAHI_DioSetOutput(0x0, 0x3);
     }
 #endif
 }
@@ -284,12 +292,8 @@ bool initialize_ir_hw(void)
     setup_send_info(&(send_info[0]));
     setup_send_info(&(send_info[1]));
     send(0, 1234);
-    /* setup DO */
-    if (bAHI_DoEnableOutputs(TRUE) == TRUE) {
-        DBG_vPrintf(DEBUG_DEVICE_FUNC, "\nEnabled DO");
-    } else {
-        DBG_vPrintf(DEBUG_DEVICE_FUNC, "\nEnabling DO FAIL!!");
-    }
+    /* setup DIO */
+    vAHI_DioSetDirection(0, 0x3);
 
     /* setup the timer */
     vAHI_Timer0RegisterCallback(on_timer0);
