@@ -18,6 +18,8 @@ extern "C" {
 /* Application common includes */
 #include "Table.h"
 
+#define HAT_BUF_LEN   32
+
 /****************************************************************************/
 /***        Macro Definitions                                             ***/
 /****************************************************************************/
@@ -28,6 +30,12 @@ extern "C" {
 #define VAR_IX_HAT_LIGHTS_2	        				2
 #define VAR_IX_HAT_LIGHTS_3	        				3
 
+/* HatPvN MIB */
+#define MIB_ID_HAT_PVN	                                                0xFFFFFE75
+#define VAR_IX_HAT_PVN_GOLD                                             0
+#define VAR_IX_HAT_PVN_BEENHIT                                          1
+#define VAR_IX_HAT_PVN_SHOTSFIRED                                       2
+#define VAR_IX_HAT_PVN_STATUS                                           3
 #if defined __cplusplus
 }
 #endif
