@@ -48,12 +48,12 @@
 /***        MIB definition                                                ***/
 /****************************************************************************/
 /* HatLights MIB */
-START_DEFINE_MIB(MIB_ID_DIO_LIGHTS, HatLightsDef)
+START_DEFINE_MIB(MIB_ID_HAT_LIGHTS, HatLightsDef)
 /*         ID 			Type    Name  Disp  Flags       Access          Cache Security */
-DEFINE_VAR(VAR_IX_DIO_LIGHTS_0, UINT32, L0, NULL,   0,    (READ | WRITE | TRAP), NONE, NONE)
-DEFINE_VAR(VAR_IX_DIO_LIGHTS_1, UINT32, L1, NULL,   0,    (READ | WRITE | TRAP), NONE, NONE)
-DEFINE_VAR(VAR_IX_DIO_LIGHTS_2, UINT32, L2, NULL,   0,    (READ | WRITE | TRAP), NONE, NONE)
-DEFINE_VAR(VAR_IX_DIO_LIGHTS_3, UINT32, L3, NULL,   0,    (READ | WRITE | TRAP), NONE, NONE)
+DEFINE_VAR(VAR_IX_HAT_LIGHTS_0, UINT32, Light0, NULL,   0,    (READ | WRITE | TRAP), NONE, NONE)
+DEFINE_VAR(VAR_IX_HAT_LIGHTS_1, UINT32, Light1, NULL,   0,    (READ | WRITE | TRAP), NONE, NONE)
+DEFINE_VAR(VAR_IX_HAT_LIGHTS_2, UINT32, Light2, NULL,   0,    (READ | WRITE | TRAP), NONE, NONE)
+DEFINE_VAR(VAR_IX_HAT_LIGHTS_3, UINT32, Light3, NULL,   0,    (READ | WRITE | TRAP), NONE, NONE)
 END_DEFINE_MIB(HatLightsDef)
 
 /****************************************************************************/

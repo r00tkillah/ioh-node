@@ -25,24 +25,24 @@ PUBLIC tsMibHatLights sMibHatLights;
 /***        MIB declaration                                               ***/
 /****************************************************************************/
 /* Registering MIB ? */
-#if MK_REG_MIB_HAT_CONFIG
+#if MK_REG_MIB_HAT_LIGHTS
 
 #define DECLARE_MIB
 #include "MibHatLightsDef.h"
-JIP_START_DECLARE_MIB(HatlightsDef, Hatlights)
-JIP_CALLBACK(Direction, MibHatlights_eSetLight0, vGetUint32, &sMibHatlights.sPerm.u32Light0)
-JIP_CALLBACK(Direction, MibHatlights_eSetLight1, vGetUint32, &sMibHatlights.sPerm.u32Light1)
-JIP_CALLBACK(Direction, MibHatlights_eSetLight2, vGetUint32, &sMibHatlights.sPerm.u32Light2)
-JIP_CALLBACK(Direction, MibHatlights_eSetLight3, vGetUint32, &sMibHatlights.sPerm.u32Light3)
-JIP_END_DECLARE_MIB(Hatlights, hHatlights)
+JIP_START_DECLARE_MIB(HatLightsDef, HatLights)
+JIP_CALLBACK(Light0, MibHatLights_eSetLight0, vGetUint32, &sMibHatLights.sPerm.u32Light0)
+JIP_CALLBACK(Light1, MibHatLights_eSetLight1, vGetUint32, &sMibHatLights.sPerm.u32Light1)
+JIP_CALLBACK(Light2, MibHatLights_eSetLight2, vGetUint32, &sMibHatLights.sPerm.u32Light2)
+JIP_CALLBACK(Light3, MibHatLights_eSetLight3, vGetUint32, &sMibHatLights.sPerm.u32Light3)
+JIP_END_DECLARE_MIB(HatLights, hHatLights)
 
 /* Public MIB handle */
-PUBLIC const thJIP_Mib hMibHatlights = &sHatlightsMib.sMib;
+PUBLIC const thJIP_Mib hMibHatLights = &sHatLightsMib.sMib;
 
 #else
 
 /* Public MIB handle */
-PUBLIC const thJIP_Mib hMibHatlights = NULL;
+PUBLIC const thJIP_Mib hMibHatLights = NULL;
 
 #endif
 

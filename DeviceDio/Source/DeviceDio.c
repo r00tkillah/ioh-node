@@ -74,6 +74,7 @@
 #include "MibDioStatus.h"
 #include "MibDioConfig.h"
 #include "MibDioControl.h"
+#include "MibHatLights.h"
 //#include "Uart.h"
 
 /****************************************************************************/
@@ -183,6 +184,9 @@ extern thJIP_Mib		 hMibDioConfig;
 extern tsMibDioControl	 sMibDioControl;
 extern thJIP_Mib		 hMibDioControl;
 #endif
+
+extern tsMibHatLights     sMibHatLights;
+extern thJIP_Mib          hMibHatLights;
 
 /****************************************************************************/
 /***        Local Variables                                               ***/
@@ -382,6 +386,7 @@ PUBLIC void Device_vPdmInit(void)
 	#if MK_BLD_MIB_DIO_CONTROL
 		MibDioControl_vInit(hMibDioControl, &sMibDioControl);
 	#endif
+	MibHatLights_vInit(hMibHatLights, &sMibHatLights);
 }
 
 /****************************************************************************

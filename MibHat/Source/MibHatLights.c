@@ -21,7 +21,7 @@
 #include <pdm.h>
 /* Application device includes */
 #include "MibHat.h"
-#include "MibHatlights.h"
+#include "MibHatLights.h"
 
 /****************************************************************************/
 /***        Macro Definitions                                             ***/

@@ -247,6 +247,10 @@ REG_MIB_DIO_CONFIG  = 1
 BLD_MIB_DIO_CONTROL  = 1
 REG_MIB_DIO_CONTROL  = 1
 
+# Flags to build and register Hat MIBs
+BLD_MIB_HAT_LIGHTS  = 1
+REG_MIB_HAT_LIGHTS  = 1
+
 # Zero version if not passed in on the command line 
 VERSION ?= 0
 # Need to create a time based version number ? 
@@ -310,6 +314,8 @@ CFLAGS += -DMK_BLD_MIB_DIO_CONFIG=$(BLD_MIB_DIO_CONFIG)
 CFLAGS += -DMK_REG_MIB_DIO_CONFIG=$(REG_MIB_DIO_CONFIG)
 CFLAGS += -DMK_BLD_MIB_DIO_CONTROL=$(BLD_MIB_DIO_CONTROL)
 CFLAGS += -DMK_REG_MIB_DIO_CONTROL=$(REG_MIB_DIO_CONTROL)
+CFLAGS += -DMK_REG_MIB_HAT_LIGHTS=$(REG_MIB_HAT_LIGHTS)
+CFLAGS += -DMK_BLD_MIB_HAT_LIGHTS=$(BLD_MIB_HAT_LIGHTS)
 CFLAGS += -DEMBEDDED
 CFLAGS += -DUSER_VSR_HANDLER
 CFLAGS += -fno-common
@@ -408,9 +414,10 @@ APPSRC += MibDioControlDec.c
 APPSRC += MibDioControl.c
 endif
 # Mib Hat files
+ifneq ($(BLD_MIB_HAT_LIGHTS), 0)
 APPSRC += MibHatLightsDec.c
 APPSRC += MibHatLights.c
-
+endif
 
 # Other files
 #APPSRC += Uart.c
