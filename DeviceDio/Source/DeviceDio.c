@@ -75,6 +75,7 @@
 #include "MibDioConfig.h"
 #include "MibDioControl.h"
 #include "MibHatLights.h"
+#include "MibHatPvN.h"
 //#include "Uart.h"
 
 /****************************************************************************/
@@ -185,8 +186,16 @@ extern tsMibDioControl	 sMibDioControl;
 extern thJIP_Mib		 hMibDioControl;
 #endif
 
+#if MK_BLD_MIB_HAT_LIGHTS
 extern tsMibHatLights     sMibHatLights;
 extern thJIP_Mib          hMibHatLights;
+#endif
+
+#if MK_BLD_MIB_HAT_PVN
+extern tsMibHatLights     sMibHatPvN;
+extern thJIP_Mib          hMibHatPvN;
+#endif
+
 
 /****************************************************************************/
 /***        Local Variables                                               ***/
@@ -386,7 +395,12 @@ PUBLIC void Device_vPdmInit(void)
 	#if MK_BLD_MIB_DIO_CONTROL
 		MibDioControl_vInit(hMibDioControl, &sMibDioControl);
 	#endif
-	MibHatLights_vInit(hMibHatLights, &sMibHatLights);
+	#if MK_BLD_MIB_HAT_LIGHTS
+		MibHatLights_vInit(hMibHatLights, &sMibHatLights);
+        #endif
+	#if MK_BLD_MIB_HAT_PVN
+		MibHatPvN_vInit(hMibHatPvN, &sMibHatPvN);
+        #endif
 }
 
 /****************************************************************************
@@ -413,6 +427,12 @@ PUBLIC void Device_vReset(bool_t bFactoryReset)
 		#endif
 		#if MK_BLD_MIB_DIO_CONTROL
 			PDM_vDeleteRecord(&sMibDioControl.sDesc);
+		#endif
+		#if MK_BLD_MIB_HAT_LIGHTS
+			PDM_vDeleteRecord(&sMibHatLights.sDesc);
+		#endif
+		#if MK_BLD_MIB_HAT_PVN
+			PDM_vDeleteRecord(&sMibHatPvN.sDesc);
 		#endif
 	}
 
@@ -452,6 +472,14 @@ PUBLIC teJIP_Status Device_eJipInit(void)
 		MibDioControl_vRegister();
 	#endif
 
+	/* Register Hat MIBS */
+	#if MK_REG_MIB_HAT_LIGHTS
+		MibHatLights_vRegister();
+	#endif
+	#if MK_REG_MIB_HAT_PVN
+		MibHatPvN_vRegister();
+	#endif
+		
 	return eStatus;
 }
 
@@ -676,11 +704,19 @@ PUBLIC void Device_vTick(void)
 		#if MK_BLD_MIB_DIO_CONTROL
 			if (u8Tick == 88) MibDioControl_vSecond();
 		#endif
+		/* Pass tick on to hat mibs */
+		#if MK_BLD_MIB_HAT_LIGHTS
+			if (u8Tick == 96) MibHatLights_vSecond();
+		#endif
+		#if MK_BLD_MIB_HAT_PVN
+			if (u8Tick == 96) MibHatPvN_vSecond();
+		#endif
 
 		/* Pass tick on to DIO mibs */
 		#if MK_BLD_MIB_DIO_STATUS
 			MibDioStatus_vTick();
 		#endif
+
 
 		/* Call JIP tick for last tick in queue */
 		if (u8TickQueue == 1)
@@ -769,6 +805,12 @@ PUBLIC void Device_vSleep(void)
 	#endif
 	#if MK_BLD_MIB_DIO_CONTROL
 		MibDioControl_vSecond();
+	#endif
+	#if MK_BLD_MIB_HAT_LIGHTS
+		MibHatLights_vSecond();
+	#endif
+	#if MK_BLD_MIB_HAT_PVN
+		MibHatPvN_vSecond();
 	#endif
 
 	/* Debug */

@@ -48,12 +48,12 @@
 /***        MIB definition                                                ***/
 /****************************************************************************/
 /* HatPvN MIB */
-START_DEFINE_MIB(MIB_ID_DIO_LIGHTS, HatPvNDef)
-/*         ID 			Type    Name  Disp  Flags       Access          Cache Security */
-DEFINE_VAR(VAR_IX_HAT_PVN_GOLD, UINT32, Gold, NULL,   0,    (READ | WRITE | TRAP), NONE, NONE)
-DEFINE_VAR(VAR_IX_HAT_PVN_BEENHIT, UINT8, BeenHit, NULL,   0,    (READ | WRITE | TRAP), NONE, NONE)
-DEFINE_VAR(VAR_IX_HAT_PVN_SHOTSFIRED, ShotsFired, NULL,   0,    (READ | WRITE | TRAP), NONE, NONE)
-DEFINE_VAR(VAR_IX_HAT_PVN_STATUS, STRING, Status, NULL,   0,    (READ | WRITE | TRAP), NONE, NONE)
+START_DEFINE_MIB(MIB_ID_HAT_PVN, HatPvNDef)
+/*         ID 			      Type    Name  Disp  Flags       Access          Cache Security */
+DEFINE_VAR(VAR_IX_HAT_PVN_GOLD,       UINT32,     Gold, NULL,   0,    (READ | WRITE | TRAP), NONE, NONE)
+DEFINE_VAR(VAR_IX_HAT_PVN_BEENHIT,    UINT8,      BeenHit, NULL,   0,    (READ | WRITE | TRAP), NONE, NONE)
+DEFINE_VAR(VAR_IX_HAT_PVN_SHOTSFIRED, UINT32,     ShotsFired, NULL,   0,       (READ | WRITE | TRAP), NONE, NONE)
+DEFINE_VAR(VAR_IX_HAT_PVN_STATUS,     STRING, Status, NULL,   0,    (READ | WRITE | TRAP), NONE, NONE)
 END_DEFINE_MIB(HatPvNDef)
 
 /****************************************************************************/
